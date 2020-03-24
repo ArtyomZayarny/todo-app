@@ -3,9 +3,7 @@ import TodoList from './components/TodoList'
 import Loading from './components/Loading';
 
 
-const setItem = (id,status) => {
-  console.log(id,status)
-}
+
 const App = ()=> {
 const [todoList,setTodoList] = useState([]);
   useEffect(() => {

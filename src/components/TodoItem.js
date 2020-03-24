@@ -48,6 +48,7 @@ const TodoItem = (props) => {
                 onClick={ (e) => {
                     e.stopPropagation();
                     setDeleteId(id)
+                    deleteItem(id)
                  } 
                 }
            ></i>
