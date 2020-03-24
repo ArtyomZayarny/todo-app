@@ -47,8 +47,35 @@ li.done {
 li.done:hover {
   background-color: #6cb7b9;
 }
-
-
  li i.fa.fa-check{
     display: none;
+}
+.Todo {
+padding-left: 20px;
+}
+.Todo ul {
+  padding-left: 0;
+}
+form label {
+  display: block;
+}
+span {
+  display: block;
+}
+span.circle {
+    display: inline-block;
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+    cursor:pointer;
+    margin-left: 10px;
+}
+span.circle:first-child {
+  margin-left: 0;
+}
+span.circle.light {
+  background-color: darkgrey;
+}
+span.circle.dark {
+  background-color: darkmagenta;
 }
