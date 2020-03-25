@@ -79,3 +79,28 @@ span.circle.light {
 span.circle.dark {
   background-color: darkmagenta;
 }
+.Todo.light ul li {
+  background-color: darkgrey;
+  color: #fff;
+}
+.Todo.light ul li.done {
+  background-color:#c5a780;
+  color:#000;
+}
+.Todo.light ul li:not(.done):hover{
+  background-color: #949191
+}
+.Todo.dark ul li{
+   background-color:darkmagenta;
+   color:#fff
+ }
+ .Todo.dark ul li.done {
+   background-color: #000;
+ }
+ .Todo.dark ul li:not(.done):hover{
+  background-color:#460446
+ }
+ .theme-toggle {
+  display: flex;
+  align-items: center;
+ }

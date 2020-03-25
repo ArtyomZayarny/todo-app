@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-
-
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 
 const updateItem = (id,userId) => {
@@ -44,16 +43,22 @@ const TodoItem = (props) => {
         >
             <i className="fa fa-check" aria-hidden="true"></i>
            {title}
-           <i className="fa fa-trash" aria-hidden="true"
+           { done && <i className="fa fa-trash" aria-hidden="true"
                 onClick={ (e) => {
                     e.stopPropagation();
                     setDeleteId(id)
                     deleteItem(id)
                  } 
                 }
-           ></i>
+            ></i> }
                
         </li>
     )
+}
+TodoItem.propTypes = {
+    title:PropTypes.string.isRequired,
+    completed:PropTypes.bool.isRequired,
+    todoList:PropTypes.array.isRequired,
+    setTodoList:PropTypes.func.isRequired
 }
 export default TodoItem
