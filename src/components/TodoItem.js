@@ -44,6 +44,7 @@ const TodoItem = (props) => {
             break;
             case 'delete':
                 updatedList =  todoList.filter( (todo) =>  todo.id !== taskId)
+                deleteItem(taskId)
                 setTodoList(updatedList);
                 break;
             }
@@ -65,8 +66,6 @@ const TodoItem = (props) => {
                 onClick={ (e) => {
                     setAction('delete')
                     e.stopPropagation();
-                    // setDeleteId(id)
-                    // deleteItem(id)
                  } 
                 }
             ></i> }
