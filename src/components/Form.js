@@ -12,9 +12,9 @@ const setTask = (text,userId) => {
     task['completed'] = false;
     return task;
 }
-const hadleSubmit = (e,title,user,todoList,setTodoList,setProcess) => {
+const hadleSubmit = (e,title,user,todoList,setTodoList,hasFetched) => {
     e.preventDefault();
-    setProcess(true)
+    hasFetched(true)
     const taskList = [...todoList];
    
     fetch('https://jsonplaceholder.typicode.com/posts', {
@@ -33,12 +33,12 @@ const hadleSubmit = (e,title,user,todoList,setTodoList,setProcess) => {
         const task = setTask(title,user);
         taskList.unshift(task);
         setTodoList(taskList);
-        setProcess(false);
+        hasFetched(false);
       })
 }
 
 const Form = (props) => {
-    const {setModal,todoList,setTodoList,setProcess} = props;
+    const {setDisplayTaskForm,todoList,setTodoList,hasFetched} = props;
     const [title,setTitle] = useState('');
     const [userList,setUserList] = useState([]);
     const[user,setUser] = useState();
@@ -49,7 +49,7 @@ const Form = (props) => {
     .then(users => setUserList(users))
     },[]);
     return(
-        <form onSubmit={(e)=>{ hadleSubmit(e,title,user,todoList,setTodoList,setProcess); setModal(false) }} >
+        <form onSubmit={(e)=>{ hadleSubmit(e,title,user,todoList,setTodoList,hasFetched); setDisplayTaskForm(false) }} >
            <p>
                <label>
                     <span>Task</span>
@@ -68,14 +68,14 @@ const Form = (props) => {
             <p>
                 <button>Save</button>
                 <button
-                onClick={() => {setModal(false)}}
+                onClick={() => {setDisplayTaskForm(false)}}
                 >cancel</button>
             </p>
         </form>
     )
 }
 Form.propTypes = {
-    setModal:PropTypes.func.isRequired,
+    setDisplayTaskForm:PropTypes.func.isRequired,
     todoList:PropTypes.array.isRequired,
     setTodoList:PropTypes.func.isRequired
 }

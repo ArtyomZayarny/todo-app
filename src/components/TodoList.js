@@ -7,17 +7,22 @@ import Form from './Form'
 
 const TodoList = (props) => {
     const{setTodoList,todoList} = props;
-    const [modal,setModal]    = useState(false);
-    const[process,setProcess] = useState(false)
+    const [displayTaskForm ,setDisplayTaskForm]    = useState(false);
+    const[isFetching,hasFetched] = useState(false)
     return(
             <>
                 <button
-                    onClick={ () => {setModal(true)}}
+                    onClick={ () => {setDisplayTaskForm(true)}}
                 >Addtask
                 </button>
-                {modal && <Form setModal={setModal} setTodoList={setTodoList} todoList={todoList} setProcess={setProcess}/>}
+                {displayTaskForm && <Form 
+                                        setDisplayTaskForm={setDisplayTaskForm}
+                                        setTodoList={setTodoList}
+                                        todoList={todoList} 
+                                        hasFetched={hasFetched}
+                                        />}
                 <ul>
-                    {process ? 'Loading...' : ''}
+                    {isFetching ? 'Loading...' : ''}
                     {props.todoList.map( (todoItem) => {
                     return <TodoItem 
                                 key={todoItem.id}
