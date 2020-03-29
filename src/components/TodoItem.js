@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 
 const updateItem = (id,userId) => {
-    fetch(`https://jsonplaceholder.typicode.com/todos/${id} `, {
+    return fetch(`https://jsonplaceholder.typicode.com/todos/${id} `, {
         method: 'PUT',
         body: JSON.stringify({
           id: id,
@@ -19,58 +19,37 @@ const updateItem = (id,userId) => {
       .then(json => console.log(json))
 }
 const deleteItem = (id) => {
-    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: 'DELETE'
     })
+   
 }
 
 const TodoItem = (props) => {
-    const {title,completed,id,userId,todoList,setTodoList} = props;
-    const[done,setDone] = useState(completed);
-    const[taskId,setTaskId] = useState(id);
-    let [action,setAction] = useState('');
-    useEffect(()=>{
-        let updatedList;
-        switch(action) {
-            case 'update':
-                updatedList = todoList.map((todo)=> {
-                    if(todo.id === taskId) {
-                        todo.completed = done;
-                    }
-                    return todo
-                });
-                updateItem(taskId,userId)
-                setTodoList(updatedList)
-            break;
-            case 'delete':
-                updatedList =  todoList.filter( (todo) =>  todo.id !== taskId)
-                deleteItem(taskId)
-                setTodoList(updatedList);
-                break;
-            }
-           
-    },[done,action]);
-   
-    let check = done ? 'done' : '';
+    const {title,completed,id,onTaskDelete,onChangeTaskStatus} = props;
+    let check = completed ? 'done' : '';
+
+    const deleteTask = useCallback(() => {
+        deleteItem(id).then(() => onTaskDelete(id))
+     }, [id]);
+
+     const  changeTaskStatus = useCallback(()=>{
+        updateItem(id).then(()=>onChangeTaskStatus(id))
+     },[id])
+
     return(
         <li className={check}
-            onClick={()=>{
-                setTaskId(id)
-                setAction('update')
-                setDone(!done)
-            }}
+            onClick={changeTaskStatus}
         >
             <i className="fa fa-check" aria-hidden="true"></i>
            {title}
-           { done && <i className="fa fa-trash" aria-hidden="true"
-                onClick={ (e) => {
-                    setAction('delete')
-                    e.stopPropagation();
-                 } 
-                }
+           { completed && <i className="fa fa-trash"
+                         aria-hidden="true"
+                         onClick={ deleteTask }
             ></i> }
                
         </li>
+
     )
 }
 TodoItem.propTypes = {

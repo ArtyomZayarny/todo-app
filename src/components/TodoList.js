@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {ThemeContext} from '../components/ThemeContext'
 import TodoItem from './TodoItem'
@@ -8,7 +8,22 @@ import Form from './Form'
 const TodoList = (props) => {
     const{setTodoList,todoList} = props;
     const [displayTaskForm ,setDisplayTaskForm]    = useState(false);
-    const[isFetching,hasFetched] = useState(false)
+    const[isFetching,hasFetched] = useState(false);
+
+    const onTaskDelete = (id) => {
+       const updatedTotoList = todoList.filter( todo => todo.id != id);
+      setTodoList(updatedTotoList)  
+    }
+    const onChangeTaskStatus = (id) => {
+       const updatedTotoList = todoList.map( (todo) => {
+           if(todo.id === id) {
+               todo.completed = !todo.completed
+           }
+           return todo
+       })
+        setTodoList(updatedTotoList);  
+    }
+
     return(
             <>
                 <button
@@ -27,7 +42,8 @@ const TodoList = (props) => {
                     return <TodoItem 
                                 key={todoItem.id}
                                 {...todoItem}
-                                setTodoList={setTodoList}
+                                onTaskDelete={onTaskDelete}
+                                onChangeTaskStatus={onChangeTaskStatus}
                                 todoList={todoList}
                             />
                     })}
